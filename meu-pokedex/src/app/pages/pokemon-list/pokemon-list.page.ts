@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { PokemonService } from '../../services/pokemon.service';
+import { Pokemon } from '../../interfaces/pokemon.interface';
+
 import {
   IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonAvatar,
   IonImg,
+  IonSearchbar,
+  IonButton,
 } from '@ionic/angular/standalone';
-import { PokemonService } from '../../services/pokemon.service';
-import { RouterModule } from '@angular/router'; // Importe o RouterModule
 
 @Component({
   selector: 'app-pokemon-list',
@@ -25,29 +22,52 @@ import { RouterModule } from '@angular/router'; // Importe o RouterModule
     FormsModule,
     RouterModule,
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonAvatar,
     IonImg,
+    IonSearchbar,
+    IonButton,
   ],
 })
 export class PokemonListPage implements OnInit {
-  pokemons: any[] = [];
+  currentPokemon: Pokemon | null = null;
+  currentPokemonId: number = 1;
 
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit() {
-    this.loadPokemons();
+    this.loadPokemon(this.currentPokemonId);
   }
 
-  loadPokemons() {
-    this.pokemonService.getPokemonList().subscribe((data) => {
-      // A API retorna um objeto com uma propriedade 'results' que é a lista
-      this.pokemons = data.results;
-    });
+  loadPokemon(idOrName: number | string) {
+    this.pokemonService
+      .getPokemonDetails(idOrName.toString().toLowerCase())
+      .subscribe({
+        next: (data: Pokemon) => {
+          this.currentPokemon = data;
+          this.currentPokemonId = data.id; // Atualiza o ID atual
+        },
+        error: (err) => {
+          console.error('Pokémon não encontrado!', err);
+          this.loadPokemon(1);
+        },
+      });
+  }
+
+  nextPokemon() {
+    this.currentPokemonId++;
+    this.loadPokemon(this.currentPokemonId);
+  }
+
+  prevPokemon() {
+    if (this.currentPokemonId > 1) {
+      this.currentPokemonId--;
+      this.loadPokemon(this.currentPokemonId);
+    }
+  }
+
+  searchPokemon(event: any) {
+    const searchTerm = event.target.value;
+    if (searchTerm) {
+      this.loadPokemon(searchTerm);
+    }
   }
 }

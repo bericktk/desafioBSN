@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Pokemon } from '../interfaces/pokemon.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,7 @@ export class PokemonService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para buscar a lista de pokémons (primeira geração)
-  getPokemonList(limit: number = 151): Observable<any> {
-    return this.http.get(`${this.baseUrl}/pokemon?limit=${limit}`);
-  }
-
-  // Método para buscar os detalhes de um pokémon específico pelo nome
-  getPokemonDetails(name: string) {
-    return this.http.get(`${this.baseUrl}/pokemon/${name}`);
+  getPokemonDetails(name: string): Observable<Pokemon> {
+    return this.http.get<Pokemon>(`${this.baseUrl}/pokemon/${name}`);
   }
 }

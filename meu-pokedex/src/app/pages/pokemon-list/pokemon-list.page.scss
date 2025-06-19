@@ -1,0 +1,55 @@
+ion-content {
+  --background: linear-gradient(to top, #65c665, #9be29b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokedex-container {
+  position: relative;
+  width: 350px;
+  height: 550px;
+  background-image: url("https://pokedex-raphael-lima.netlify.app/src/images/pokedex.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pokemon-image {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+}
+
+.pokemon-name {
+  position: absolute;
+  top: 51%;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+.search-bar {
+  position: absolute;
+  top: 70%;
+  left: 17%;
+  width: 66%;
+  --background: #fff;
+  --border-radius: 5px;
+  --box-shadow: none;
+  height: 40px;
+  color: #333;
+}
+
+.nav-buttons {
+  position: absolute;
+  bottom: 12.5%;
+  left: 17%;
+  width: 66%;
+  display: flex;
+  justify-content: space-between;
+}
