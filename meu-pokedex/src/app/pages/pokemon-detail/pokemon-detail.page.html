@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pokemons"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-capitalize">{{ pokemon?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="pokemon">
+    <ion-card-header class="ion-text-center">
+      <ion-img
+        [src]="pokemon.sprites.front_default"
+        style="width: 150px; margin: auto"
+      ></ion-img>
+      <ion-card-title class="ion-text-capitalize"
+        >{{ pokemon.name }}</ion-card-title
+      >
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="ion-text-center">
+        <strong>Tipos:</strong>
+        <ion-chip
+          *ngFor="let typeInfo of pokemon.types"
+          outline="true"
+          color="secondary"
+        >
+          <ion-label>{{ typeInfo.type.name }}</ion-label>
+        </ion-chip>
+      </div>
+
+      <p><strong>Altura:</strong> {{ pokemon.height * 10 }} cm</p>
+      <p><strong>Peso:</strong> {{ pokemon.weight / 10 }} kg</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
